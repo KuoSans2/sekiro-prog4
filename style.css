@@ -1,0 +1,239 @@
+* {
+    margin: 0%;
+    padding: 0%;
+    font-size: 100%;
+    border: 0%;
+    vertical-align: baseline;
+}
+
+.card {
+    height: 100%;
+}
+
+body {
+    text-align: center;
+    background-color: black;
+    justify-content: center;
+    justify-items: center;
+}
+
+.head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 120px;
+    background-color: rgb(25, 7, 7);
+    position: fixed;
+    width: 100%;
+    z-index: 100;
+}
+
+.navbar {
+    display: flex;
+    margin: 0px;
+}
+
+.Sekiro {
+    margin-left: 10px;
+}
+
+.Sekiro a {
+    text-decoration: none;
+    color: azure;
+    text-transform: uppercase;
+    font-size: 25px;
+}
+
+.navbar a {
+    display: block;
+    color: azure;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: 15px;
+    padding: 20px 20px;
+}
+
+.navbar a:hover {
+    background-color: rgb(54, 54, 54);
+    background-position: center center;
+    background-size: auto;
+}
+
+.sep {
+    margin-bottom: 100px;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header {
+    height: 60vh !important;
+    background: url(sekiro-aiming-to-support-japanese-audio-worldwide_2r2v.1200.jpg) no-repeat center;
+    background-size: cover;
+}
+
+.title {
+    margin-bottom: 0px;
+    font-size: 40px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: azure;
+}
+
+.p {
+    font-size: 18px;
+    margin-bottom: 60px;
+    color: azure;
+}
+
+.btn {
+    display: inline-block;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    padding: 10px 40px;
+    border: 3px solid rgb(255, 255, 255);
+    color: rgb(255, 255, 255);
+    background-color: rgb(85, 85, 85);
+    text-decoration: none;
+}
+
+.btn:hover {
+    background: none;
+}
+
+.btn-home {
+    display: flex;
+}
+
+.btn-home a {
+    margin: 20px 20px;
+}
+
+.content {
+    height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.d-block {
+    height: 300px;
+    width: 250px;
+}
+
+/*body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+}*/
+
+.image-gallery-container {
+    display: grid;
+    display: flex;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 10px;
+    max-width: 1200px;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    align-items: center center;
+    margin-bottom: 100px;
+    margin-top: 10px;
+}
+
+.image-card {
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+    transition: transform 0.2s ease-in-out;
+    margin-top: 10px;
+    margin-bottom: 40px;
+}
+
+.image-card:hover {
+    transform: translateY(-5px);
+}
+
+.image-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    display: block;
+    border-bottom: 1px solid #eee;
+}
+
+.image-title {
+    font-size: 1.3em;
+    color: #ffffff;
+    margin: 15px 10px 5px;
+    margin-bottom: 10px;
+    padding: 0 10px;
+}
+
+.image-description {
+    font-size: 0.9em;
+    color: #ffffff;
+    margin: 0 10px 15px;
+    padding: 0 10px;
+    line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+    .image-gallery-container {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        padding: 15px;
+    }
+
+    .image-card img {
+        height: 200px;
+    }
+}
+
+@media (max-width: 480px) {
+    .image-gallery-container {
+        grid-template-columns: 1fr;
+        padding: 10px;
+    }
+
+    .image-card img {
+        height: 180px;
+    }
+
+    .image-title {
+        font-size: 1.1em;
+        margin: 10px 5px 3px;
+    }
+
+    .image-description {
+        font-size: 0.8em;
+        margin: 0 5px 10px;
+        padding: 20px;
+    }
+}
+
+.mj {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    max-width: 1200px;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    align-items: center;
+    margin-bottom: 100px;
+    margin-top: 10px;
+}
+
+.desc {
+    color: #ffffff;
+}
