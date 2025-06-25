@@ -1,3 +1,28 @@
+<?php
+    include "model/conexion.php";
+    include "controller/new_coment.php";
+
+    $edit_id = '';
+    $edit_userName = '';
+    $edit_userEmail = '';
+    $edit_commentText = '';
+
+    if (isset($_GET['edit_id'])) {
+        $commentIdToEdit = $_GET['edit_id'];
+        $stmt = $con->prepare("SELECT `nombre_o_usuario`, `email`, `nota` FROM comentarios WHERE id = ?");
+        $stmt->bind_param("i", $commentIdToEdit);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result->num_rows > 0) {
+            $commentToEdit = $result->fetch_assoc();
+            $edit_id = $commentIdToEdit;
+            $edit_userName = htmlspecialchars($commentToEdit['nombre_o_usuario']);
+            $edit_userEmail = htmlspecialchars($commentToEdit['email']);
+            $edit_commentText = htmlspecialchars($commentToEdit['nota']);
+        }
+        $stmt->close();
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -245,45 +270,49 @@
     <section class="comments-section" id="Comentarios">
         <h2 class="title">Deja tu Comentario</h2>
 
-        <form id="comment-form" class="comment-form" action="#" method="post">
-            <input type="hidden" id="commentId" name="id" value="">
+        <form id="comment-form" class="comment-form" action="#Comentarios" method="post">
+            <input type="hidden" id="commentId" name="edit_comment_id" value="<?php echo $edit_id; ?>">
 
             <div class="form-group">
                 <label for="userName">Nombre y Apellido / Nombre de Usuario:</label>
-                <input type="text" id="userName" name="userName" required>
+                <input type="text" id="userName" name="userName" value="<?php echo $edit_userName; ?>" required>
             </div>
             <div class="form-group">
                 <label for="userEmail">Correo electrónico:</label>
-                <input type="email" id="userEmail" name="userEmail" required>
+                <input type="email" id="userEmail" name="userEmail" value="<?php echo $edit_userEmail; ?>" required>
             </div>
             <div class="form-group">
                 <label for="commentText">Tu comentario/nota:</label>
-                <textarea id="commentText" name="commentText" rows="5" required></textarea>
+                <textarea id="commentText" name="commentText" rows="5" required><?php echo $edit_commentText; ?></textarea>
             </div>
-            <button type="submit" class="btn">Enviar Comentario</button>
+            <button type="submit" class="btn" name="<?php echo ($edit_id ? 'update_ec' : 'bto_ec'); ?>">
+                <?php echo ($edit_id ? 'Actualizar Comentario' : 'Enviar Comentario'); ?>
+            </button>
         </form>
 
         <h3 class="title">Comentarios Anteriores</h3>
+
         <div id="comments-list" class="comments-list">
-            <div class="comment-item" data-id="1">
-                <p><strong>Paola Camacho</strong> (<a href="mailto:pao.acd@example.com">pao.acd@example.com</a>)</p>
-                <p class="comment-date">Publicado el: 25/06/2025 01:51:52 AM</p>
-                <p class="comment-content">¡Excelente contenido sobre Sekiro! Me encantan las guías sobre los jefes, me
-                    fueron muy útiles.</p>
-                <div class="comment-actions">
-                    <button class="edit-btn btn" data-id="1">Editar</button>
-                    <button class="delete-btn btn" data-id="1">Eliminar</button>
-                </div>
-            </div>
-            <div class="comment-item" data-id="2">
-                <p><strong>ShinobiFan23</strong> (<a href="mailto:shino.fan@example.com">shino.fan@example.com</a>)</p>
-                <p class="comment-date">Publicado el: 24/06/2025 08:30:00 PM</p>
-                <p class="comment-content">El simio guardián es un dolor de cabeza, ¡pero las prótesis son geniales!</p>
-                <div class="comment-actions">
-                    <button class="edit-btn btn" data-id="2">Editar</button>
-                    <button class="delete-btn btn" data-id="2">Eliminar</button>
-                </div>
-            </div>
+            <?php
+                $sql_select_comments = "SELECT * FROM comentarios ORDER BY fecha_nota DESC";
+                $result_comments = $con->query($sql_select_comments);
+
+                if ($result_comments->num_rows > 0) {
+                    while($row = $result_comments->fetch_assoc()) {
+                        echo '<div class="comment-item" data-id="' . htmlspecialchars($row["id"]) . '">';
+                        echo '<p><strong>' . htmlspecialchars($row["nombre_o_usuario"]) . '</strong> (<a href="mailto:' . htmlspecialchars($row["email"]) . '">' . htmlspecialchars($row["email"]) . '</a>)</p>';
+                        echo '<p class="comment-date">Publicado el: ' . htmlspecialchars($row["fecha_nota"]) . '</p>';
+                        echo '<p class="comment-content">' . nl2br(htmlspecialchars($row["nota"])) . '</p>'; 
+                        echo '<div class="comment-actions">';
+                        echo '<a href="index.php?edit_id=' . htmlspecialchars($row["id"]) . '#Comentarios" class="edit-btn btn">Editar</a>';
+                        echo '<a href="index.php?delete_id=' . htmlspecialchars($row["id"]) . '#Comentarios" class="delete-btn btn" onclick="return confirm(\'¿Estás seguro de que quieres eliminar este comentario?\');">Eliminar</a>';
+                        echo '</div>';
+                        echo '</div>';
+                    }
+                } else {
+                    echo "<p>No hay comentarios aún. ¡Sé el primero en comentar!</p>";
+                }
+            ?>
         </div>
     </section>
 
